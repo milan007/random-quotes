@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Random Quotes</string>
+    <string name="image_description" />
+
+    <!-- QUOTES -->
+    <string name="quotes_1">Coming together is a beginning; keeping together is progress; working together is success.\nHenry Ford</string>
+    <string name="quotes_2">Success is not final, failure is not fatal: it is the courage to continue that counts.\nWinston Churchill</string>
+    <string name="quotes_3">Progress is impossible without change, and those who cannot change their minds cannot change anything.\nGeorge Bernard Shaw</string>
+    <string name="quotes_4">To improve is to change; to be perfect is to change often.\nWinston Churchill</string>
+    <string name="quotes_5">Never believe that a few caring people can\'t change the world. For, indeed, that\'s all who ever have.\nMargaret Mead</string>
+    <string name="quotes_6">If you change the way you look at things, the things you look at change.\nWayne Dyer</string>
+    <string name="quotes_7">Very often a change of self is needed more than a change of scene.\nA. C. Benson</string>
+    <string name="quotes_8">Once you replace negative thoughts with positive ones, you\'ll start having positive results.\nWillie Nelson</string>
+    <string name="quotes_9">Keep your face to the sunshine and you cannot see a shadow.\nHelen Keller</string>
+    <string name="quotes_10">Believe that life is worth living and your belief will help create the fact.\nWilliam James</string>
+    
+    <string-array name="quotes">
+        <item>@string/quotes_1</item>
+        <item>@string/quotes_2</item>
+        <item>@string/quotes_3</item>
+        <item>@string/quotes_4</item>
+        <item>@string/quotes_5</item>
+        <item>@string/quotes_6</item>
+        <item>@string/quotes_7</item>
+        <item>@string/quotes_8</item>
+        <item>@string/quotes_9</item>
+        <item>@string/quotes_10</item>
+        </string-array>
+</resources>
