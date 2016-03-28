@@ -1,6 +1,9 @@
-package randomquotes.mentatmobile.com.random_quotes;
+package com.mentatmobile.randomquotes;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,71 +16,71 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Field;
-
 public class MainActivity extends Activity {
 
-    private static final long ANIMATION_DURATION = 8000;
     private static final String LOG_TAG = "RandomQuotesTag";
+    private static final int ANIMATION_DURATION = 8000;
+    private static final int RESET_IMAGE_ID = 1;
+    private static final int MAX_IMAGE_ID = 10;
 
-    private Field[] images;
     private String[] texts;
-    private int indexImage = 0;
+    private int indexImage = RESET_IMAGE_ID + 1;
     private int indexText = 0;
     private ImageView imageView;
     private TextView textView;
-    private Handler cycleHandler = new Handler();
+    private Handler animationHandler = new Handler();
     private Handler hideHandler = new Handler();
     private AnimationSet imageAnimationSet;
     private AnimationSet textAnimationSet;
-
+    private Bitmap currentBitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = (ImageView)findViewById(R.id.image);
         textView = (TextView)findViewById(R.id.text);
-        images = R.mipmap.class.getFields();
         texts = getResources().getStringArray(R.array.quotes);
+        currentBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.image001);
+
+        clearStorage();
 
         configureAnimationSets();
         hideNavigation();
 
         // register a listener for when the navigation bar re-appears
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(
-                new View.OnSystemUiVisibilityChangeListener() {
+            new View.OnSystemUiVisibilityChangeListener() {
 
-                    @Override
-                    public void onSystemUiVisibilityChange(int visibility) {
-                        if (visibility == 0) {
-                            // the navigation bar re-appears, let’s hide it
-                            // after 2 seconds
-                            hideHandler.postDelayed(mHideRunnable, 2000);
-                        }
+                @Override
+                public void onSystemUiVisibilityChange(int visibility) {
+                    if (visibility == 0) {
+                        // the navigation bar re-appears, let’s hide it
+                        // after 2 seconds
+                        hideHandler.postDelayed(mHideRunnable, 2000);
                     }
                 }
+            }
         );
 
-        cycleHandler.postDelayed(run, 1000);
+        animationHandler.postDelayed(runAnimation, 1000);
     }
 
-    Runnable run = new Runnable() {
+    private void clearStorage(){
+
+        for(int imageId = RESET_IMAGE_ID; imageId < MAX_IMAGE_ID + 1; imageId++){
+            deleteFile(String.format("image%03d.png", imageId));
+        }
+
+    }
+
+    Runnable runAnimation = new Runnable() {
         @Override
         public void run() {
             try {
-                int idImage = images[indexImage++].getInt(null);
+                BitmapDrawable ob = new BitmapDrawable(getResources(), currentBitmap);
 
-                if(R.mipmap.ic_launcher == idImage){
-                    idImage = images[indexImage++].getInt(null);
-                }
-
-                imageView.setBackground(getResources().getDrawable(idImage));
+                imageView.setBackground(ob);
                 textView.setText(texts[indexText++]);
-                textView.setVisibility(View.VISIBLE);
-
-                if (indexImage == images.length) {
-                    indexImage = 0;
-                }
 
                 if (indexText == texts.length) {
                     indexText = 0;
@@ -86,9 +89,31 @@ public class MainActivity extends Activity {
                 imageView.startAnimation(imageAnimationSet);
                 textView.startAnimation(textAnimationSet);
 
-                cycleHandler.postDelayed(run, ANIMATION_DURATION);
+                new Thread(runGetBitmap).start();
+                animationHandler.postDelayed(runAnimation, ANIMATION_DURATION);
             }
-            catch (IllegalAccessException e) {
+            catch (Exception e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+            }
+        }
+    };
+
+    Runnable runGetBitmap = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                if(indexImage > MAX_IMAGE_ID) {
+                    indexImage = RESET_IMAGE_ID;
+                }
+
+                currentBitmap = new GetImage().execute(indexImage++, getApplicationContext()).get();
+
+                if(currentBitmap == null){
+                    indexImage = RESET_IMAGE_ID + 1;
+                    currentBitmap =  BitmapFactory.decodeResource(getResources(), R.mipmap.image001);
+                }
+            }
+            catch (Exception e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
             }
         }
@@ -102,8 +127,8 @@ public class MainActivity extends Activity {
     };
 
     private void configureAnimationSets(){
-        Animation zoomin = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
-        zoomin.setDuration(ANIMATION_DURATION);
+        Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+        zoomIn.setDuration(ANIMATION_DURATION);
 
         AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f) ;
         AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f) ;
@@ -115,7 +140,7 @@ public class MainActivity extends Activity {
 
         imageAnimationSet = new AnimationSet(true);
         imageAnimationSet.setInterpolator(new AccelerateInterpolator());
-        imageAnimationSet.addAnimation(zoomin);
+        imageAnimationSet.addAnimation(zoomIn);
         imageAnimationSet.addAnimation(fadeIn);
         imageAnimationSet.addAnimation(fadeOut);
 
