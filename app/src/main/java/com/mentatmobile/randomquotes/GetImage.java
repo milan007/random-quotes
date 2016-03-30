@@ -34,7 +34,6 @@ public class GetImage extends AsyncTask<Object, Void, Bitmap>{
 
             bitmap = readFile(fileName, context);
             if (bitmap != null) {
-                Log.d(LOG_TAG, "Returned " + fileName + " from private store...");
                 return bitmap;
             }
 
@@ -46,11 +45,15 @@ public class GetImage extends AsyncTask<Object, Void, Bitmap>{
             InputStream is = conn.getInputStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             bitmap = BitmapFactory.decodeStream(bis);
-            writeFile(fileName, bitmap, context);
+
+            if(bitmap != null) {
+                writeFile(fileName, bitmap, context);
+                Log.d(LOG_TAG, "Returned " + fileName + " from URL " + url.getPath() + "...");
+            }
+
             bis.close();
             is.close();
 
-            Log.d(LOG_TAG, "Returned " + fileName + " from URL " + url.getPath() + "..." );
         }
         catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage(), e);
@@ -59,19 +62,74 @@ public class GetImage extends AsyncTask<Object, Void, Bitmap>{
         return bitmap;
     }
 
-    private void writeFile(String fileName, Bitmap bitmap, Context context) throws Exception{
-        FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        fos.close();
+    private void writeFile(String fileName, Bitmap bitmap, Context context) {
+        FileOutputStream fos = null;
+
+        try {
+            if (bitmap == null && fileName == null && fileName == "") {
+                fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            }
+        }
+        catch(Exception e){
+        }
+        finally{
+            try{
+                fos.close();
+            }
+            catch(Exception e){
+            }
+        }
     }
 
     private Bitmap readFile(String fileName, Context context){
+        Bitmap bitmap = readFileFromAssets(fileName, context);
+
+        if(bitmap == null){
+            bitmap = readFileFromFileInput(fileName, context);
+        }
+
+        return bitmap;
+    }
+
+    private Bitmap readFileFromFileInput(String fileName, Context context){
         Bitmap bitmap = null;
         try {
             FileInputStream input = context.openFileInput(fileName);
             bitmap = BitmapFactory.decodeStream(input);
         }
         catch(Exception e){
+        }
+
+        if(bitmap != null){
+            Log.d(LOG_TAG, "Returned " + fileName + " from File Input");
+        }
+
+        return bitmap;
+    }
+
+    private Bitmap readFileFromAssets(String fileName, Context context){
+        Bitmap bitmap = null;
+        InputStream inputStream = null;
+
+        try {
+            inputStream = context.getAssets().open("images/" + fileName);
+            bitmap = BitmapFactory.decodeStream(inputStream);
+        }
+        catch(Exception e){
+        }
+        finally{
+            if(inputStream != null) {
+                try {
+                    inputStream.close();
+                }
+                catch (Exception e){
+                }
+            }
+        }
+
+        if(bitmap != null){
+            Log.d(LOG_TAG, "Returned " + fileName + " from Assets");
         }
 
         return bitmap;

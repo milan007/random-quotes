@@ -16,12 +16,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
+
 public class MainActivity extends Activity {
 
     private static final String LOG_TAG = "RandomQuotesTag";
     private static final int ANIMATION_DURATION = 8000;
     private static final int RESET_IMAGE_ID = 1;
-    private static final int MAX_IMAGE_ID = 10;
 
     private String[] texts;
     private int indexImage = RESET_IMAGE_ID + 1;
@@ -40,7 +41,7 @@ public class MainActivity extends Activity {
         imageView = (ImageView)findViewById(R.id.image);
         textView = (TextView)findViewById(R.id.text);
         texts = getResources().getStringArray(R.array.quotes);
-        currentBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.image001);
+        currentBitmap = setInitialBitmap();
 
         clearStorage();
 
@@ -67,7 +68,7 @@ public class MainActivity extends Activity {
 
     private void clearStorage(){
 
-        for(int imageId = RESET_IMAGE_ID; imageId < MAX_IMAGE_ID + 1; imageId++){
+        for(int imageId = RESET_IMAGE_ID; imageId < 50; imageId++){
             deleteFile(String.format("image%03d.png", imageId));
         }
 
@@ -102,15 +103,11 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             try {
-                if(indexImage > MAX_IMAGE_ID) {
-                    indexImage = RESET_IMAGE_ID;
-                }
-
                 currentBitmap = new GetImage().execute(indexImage++, getApplicationContext()).get();
 
                 if(currentBitmap == null){
                     indexImage = RESET_IMAGE_ID + 1;
-                    currentBitmap =  BitmapFactory.decodeResource(getResources(), R.mipmap.image001);
+                    currentBitmap =  setInitialBitmap();
                 }
             }
             catch (Exception e) {
@@ -162,5 +159,28 @@ public class MainActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+    }
+
+    private Bitmap setInitialBitmap(){
+        Bitmap bitmap = null;
+        InputStream inputStream = null;
+
+        try {
+            inputStream = getAssets().open("images/image001.png");
+            bitmap = BitmapFactory.decodeStream(inputStream);
+        }
+        catch(Exception e){
+        }
+        finally{
+            if(inputStream != null) {
+                try {
+                    inputStream.close();
+                }
+                catch (Exception e){
+                }
+            }
+        }
+
+        return bitmap;
     }
 }
