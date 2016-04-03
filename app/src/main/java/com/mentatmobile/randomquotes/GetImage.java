@@ -66,7 +66,7 @@ public class GetImage extends AsyncTask<Object, Void, Bitmap>{
         FileOutputStream fos = null;
 
         try {
-            if (bitmap == null && fileName == null && fileName == "") {
+            if (bitmap != null && fileName != null && fileName != "") {
                 fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
             }
