@@ -16,6 +16,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mentatmobile.randomquotes.data.DatabaseHandler;
+import com.mentatmobile.randomquotes.data.Quote;
+
 import java.io.InputStream;
 
 public class MainActivity extends Activity {
@@ -24,9 +27,7 @@ public class MainActivity extends Activity {
     private static final int ANIMATION_DURATION = 8000;
     private static final int RESET_IMAGE_ID = 1;
 
-    private String[] texts;
     private int indexImage = RESET_IMAGE_ID + 1;
-    private int indexText = 0;
     private ImageView imageView;
     private TextView textView;
     private Handler animationHandler = new Handler();
@@ -34,44 +35,56 @@ public class MainActivity extends Activity {
     private AnimationSet imageAnimationSet;
     private AnimationSet textAnimationSet;
     private Bitmap currentBitmap;
+    private DatabaseHandler databaseHandler = new DatabaseHandler(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = (ImageView)findViewById(R.id.image);
         textView = (TextView)findViewById(R.id.text);
-        texts = getResources().getStringArray(R.array.quotes);
         currentBitmap = setInitialBitmap();
 
-        clearStorage();
+        //        clearStorage();
 
+        configureDatabase();
         configureAnimationSets();
         hideNavigation();
 
         // register a listener for when the navigation bar re-appears
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(
-            new View.OnSystemUiVisibilityChangeListener() {
+                new View.OnSystemUiVisibilityChangeListener() {
 
-                @Override
-                public void onSystemUiVisibilityChange(int visibility) {
-                    if (visibility == 0) {
-                        // the navigation bar re-appears, let’s hide it
-                        // after 2 seconds
-                        hideHandler.postDelayed(mHideRunnable, 2000);
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        if (visibility == 0) {
+                            // the navigation bar re-appears, let’s hide it
+                            // after 2 seconds
+                            hideHandler.postDelayed(mHideRunnable, 2000);
+                        }
                     }
                 }
-            }
         );
-
-        animationHandler.postDelayed(runAnimation, 1000);
     }
 
-    private void clearStorage(){
+    //    private void clearStorage(){
+//
+//        for(int imageId = RESET_IMAGE_ID; imageId < 50; imageId++){
+//            deleteFile(String.format("image%03d.png", imageId));
+//        }
+//
+//    }
 
-        for(int imageId = RESET_IMAGE_ID; imageId < 50; imageId++){
-            deleteFile(String.format("image%03d.png", imageId));
-        }
+    @Override
+    protected void onPause() {
+        animationHandler.removeCallbacks(runAnimation);
+        super.onPause();
+    }
 
+    @Override
+    protected void onResume() {
+        animationHandler.postDelayed(runAnimation, 1000);
+        super.onResume();
     }
 
     Runnable runAnimation = new Runnable() {
@@ -79,13 +92,11 @@ public class MainActivity extends Activity {
         public void run() {
             try {
                 BitmapDrawable ob = new BitmapDrawable(getResources(), currentBitmap);
-
                 imageView.setBackground(ob);
-                textView.setText(texts[indexText++]);
 
-                if (indexText == texts.length) {
-                    indexText = 0;
-                }
+                Quote quote = databaseHandler.getRandomQuote();
+                String text = quote.getQuote() + "\n" + quote.getAuthor();
+                textView.setText(text);
 
                 imageView.startAnimation(imageAnimationSet);
                 textView.startAnimation(textAnimationSet);
@@ -123,6 +134,15 @@ public class MainActivity extends Activity {
         }
     };
 
+    private void configureDatabase(){
+        try {
+            databaseHandler.createDataBase();
+            databaseHandler.openDataBase();
+        }
+        catch(Exception e){
+            Log.e(LOG_TAG, e.getMessage(), e);
+        }
+    }
     private void configureAnimationSets(){
         Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
         zoomIn.setDuration(ANIMATION_DURATION);

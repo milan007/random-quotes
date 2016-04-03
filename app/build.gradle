@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "randomquotes.mentatmobile.com.random_quotes"
+        applicationId "com.mentatmobile.randomquotes"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
