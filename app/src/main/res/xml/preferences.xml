@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.mentatmobile.randomquotes.NumberPickerPreference
+        android:key="maxBackgrounds"
+        android:defaultValue="10"
+        android:title="@string/max_backgrounds"
+        android:summary="@string/max_backgrounds_summary" />
+    <MultiSelectListPreference android:title="@string/genres"
+        android:summary="@string/genres_summary"
+        android:key="genreList"
+        android:defaultValue="@array/genreArray"
+        android:entries="@array/genreArray"
+        android:entryValues="@array/genreArray"/>
+</PreferenceScreen>

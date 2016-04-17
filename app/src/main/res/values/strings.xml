@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Random Quotes</string>
     <string name="image_description" />
-
+    <string name="settings">Settings</string>
+    <string name="max_backgrounds">Maximum Backgrounds</string>
+    <string name="max_backgrounds_summary">Maximum number of backgrounds to cycle through</string>
+    <string name="genres">Genres</string>
+    <string name="genres_summary">Choose the genres you\'d like to read</string>
 </resources>

@@ -1,12 +1,16 @@
 package com.mentatmobile.randomquotes;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -31,7 +35,6 @@ public class MainActivity extends Activity {
     private ImageView imageView;
     private TextView textView;
     private Handler animationHandler = new Handler();
-    private Handler hideHandler = new Handler();
     private AnimationSet imageAnimationSet;
     private AnimationSet textAnimationSet;
     private Bitmap currentBitmap;
@@ -41,39 +44,50 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         imageView = (ImageView)findViewById(R.id.image);
         textView = (TextView)findViewById(R.id.text);
         currentBitmap = setInitialBitmap();
 
-        //        clearStorage();
-
+        clearStorage();
         configureDatabase();
         configureAnimationSets();
-        hideNavigation();
-
-        // register a listener for when the navigation bar re-appears
-        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(
-                new View.OnSystemUiVisibilityChangeListener() {
-
-                    @Override
-                    public void onSystemUiVisibilityChange(int visibility) {
-                        if (visibility == 0) {
-                            // the navigation bar re-appears, let’s hide it
-                            // after 2 seconds
-                            hideHandler.postDelayed(mHideRunnable, 2000);
-                        }
-                    }
-                }
-        );
     }
 
-    //    private void clearStorage(){
-//
-//        for(int imageId = RESET_IMAGE_ID; imageId < 50; imageId++){
-//            deleteFile(String.format("image%03d.png", imageId));
-//        }
-//
-//    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_UP) {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
+
+    private void clearStorage(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String maxBackgrounds = preferences.getString("maxBackgrounds", "-1");
+        Integer intMaxBackgrounds = Integer.parseInt(maxBackgrounds);
+
+        for(int imageId = intMaxBackgrounds; imageId < 50; imageId++){
+            deleteFile(String.format("image%03d.png", imageId));
+        }
+    }
 
     @Override
     protected void onPause() {
@@ -114,6 +128,13 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             try {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                Integer maxBackgrounds = preferences.getInt("maxBackgrounds", 10);
+
+                if(indexImage > maxBackgrounds){
+                    indexImage = RESET_IMAGE_ID;
+                }
+
                 currentBitmap = new GetImage().execute(indexImage++, getApplicationContext()).get();
 
                 if(currentBitmap == null){
@@ -124,13 +145,6 @@ public class MainActivity extends Activity {
             catch (Exception e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
             }
-        }
-    };
-
-    Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hideNavigation();
         }
     };
 
@@ -165,20 +179,6 @@ public class MainActivity extends Activity {
         textAnimationSet.setInterpolator(new AccelerateInterpolator());
         textAnimationSet.addAnimation(fadeIn);
         textAnimationSet.addAnimation(fadeOut);
-    }
-
-    private void hideNavigation(){
-        View decorView = getWindow().getDecorView();
-        // Hide both the navigation bar and the status bar.
-        // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
-        // a general rule, you should design your app to hide the status bar whenever you
-        // hide the navigation bar.
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private Bitmap setInitialBitmap(){

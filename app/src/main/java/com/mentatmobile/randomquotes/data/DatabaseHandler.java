@@ -1,11 +1,15 @@
 package com.mentatmobile.randomquotes.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +18,7 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.Set;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String LOG_TAG = "RandomQuotesTag";
@@ -129,15 +133,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         myOutput.flush();
         myOutput.close();
         myInput.close();
-
     }
 
     public void openDataBase() throws SQLException {
-
         //Open the database
         String myPath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-
     }
 
     @Override
@@ -192,60 +193,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return quote;
     }
 
-    public Quote getNextQuote(int id) {
-        SQLiteDatabase db = null;
-        Cursor cursor= null;
-        Quote quote = null;
-
-        try {
-            db = this.getReadableDatabase();
-            cursor = db.rawQuery("SELECT * FROM " + TABLE_QUOTES + " WHERE " + KEY_ID + " > " + id + " ORDER BY " + KEY_ID + " LIMIT 1", null);
-            if (cursor != null) {
-                cursor.moveToFirst();
-            }
-
-            quote = new Quote(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3));
-        }
-        catch(Exception e){
-            Log.e(LOG_TAG, e.getMessage(), e);
-        }
-        finally{
-            cursor.close();
-            db.close();
-        }
-
-        return quote;
-    }
-
-    public Quote getRandomQuote() {
-        int randomId = 0;
-        SQLiteDatabase db = null;
-        Cursor cursor= null;
-
-        try {
-            db = this.getReadableDatabase();
-            cursor = db.rawQuery("SELECT count(*) FROM " + TABLE_QUOTES, null);
-            if (cursor != null) {
-                cursor.moveToFirst();
-            }
-
-            Integer count = Integer.parseInt(cursor.getString(0));
-
-            Random random = new Random();
-            randomId = random.nextInt(count);
-        }
-        catch(Exception e){
-            Log.e(LOG_TAG, e.getMessage(), e);
-        }
-        finally{
-            cursor.close();
-            db.close();
-        }
-
-        Quote quote = getNextQuote(randomId);
-        return quote;
-    }
-
     public List<Quote> getAllQuotes() {
         SQLiteDatabase db = null;
         Cursor cursor= null;
@@ -274,5 +221,46 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // return contact list
         return quoteList;
+    }
+
+    public Quote getRandomQuote() {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        Quote quote = null;
+
+        String selectClause = "SELECT * FROM " + TABLE_QUOTES;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(myContext);
+        Set<String> genres = preferences.getStringSet("genreList", null);
+
+        if(genres != null && genres.size() > 0) {
+            selectClause += " WHERE genre IN (";
+
+            for (String genre : genres) {
+                selectClause += "'" + genre + "',";
+            }
+            selectClause = StringUtils.removeEnd(selectClause, ",") + ")";
+        }
+
+        selectClause += " ORDER BY RANDOM() LIMIT 1";
+
+        try {
+            db = this.getReadableDatabase();
+            cursor = db.rawQuery(selectClause, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+            }
+
+            quote = new Quote(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        }
+        catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+        }
+        finally {
+            cursor.close();
+            db.close();
+        }
+
+        return quote;
     }
 }
