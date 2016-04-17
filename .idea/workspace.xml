@@ -13,6 +13,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SettingsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SettingsActivity.java" />
     </list>
     <ignored path="random-quotes.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,13 +41,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.30664653">
-              <caret line="85" column="40" selection-start-line="85" selection-start-column="40" selection-end-line="85" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="84" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#4300#5103#0" expanded="true" />
+                <element signature="e#5102#5103#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -65,15 +68,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SplashActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SplashActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SplashActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="48" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.40936556">
+              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#447#888#0" expanded="true" />
-                <element signature="e#887#888#0" expanded="true" />
+                <element signature="e#502#943#0" expanded="true" />
+                <element signature="e#942#943#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -82,8 +85,8 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.692308">
-              <caret line="26" column="71" selection-start-line="26" selection-start-column="71" selection-end-line="26" selection-end-column="71" />
+            <state vertical-scroll-proportion="-11.769231">
+              <caret line="27" column="77" selection-start-line="27" selection-start-column="77" selection-end-line="27" selection-end-column="77" />
               <folding>
                 <element signature="e#521#539#0" expanded="true" />
               </folding>
@@ -119,7 +122,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SettingsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="56" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="56" />
+              <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -1704,15 +1707,15 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/array.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/GenreMultiSelectListPreference.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SettingsActivity.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/data/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/NumberPickerPreference.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/preferences.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/splash.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SplashActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SettingsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SplashActivity.java" />
       </list>
     </option>
   </component>
@@ -2473,6 +2476,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4300#5103#0" expanded="true" />
+            <element signature="e#5102#5103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2511,6 +2516,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4300#5103#0" expanded="true" />
+            <element signature="e#5102#5103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2549,6 +2556,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4300#5103#0" expanded="true" />
+            <element signature="e#5102#5103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2587,6 +2596,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4300#5103#0" expanded="true" />
+            <element signature="e#5102#5103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2625,6 +2636,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4300#5103#0" expanded="true" />
+            <element signature="e#5102#5103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2663,6 +2676,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4300#5103#0" expanded="true" />
+            <element signature="e#5102#5103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2846,6 +2861,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.769231">
+          <caret line="27" column="77" selection-start-line="27" selection-start-column="77" selection-end-line="27" selection-end-column="77" />
+          <folding>
+            <element signature="e#521#539#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/splash.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.5454545">
@@ -2857,42 +2882,34 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="84" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4300#5103#0" expanded="true" />
+            <element signature="e#5102#5103#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SettingsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="56" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="56" />
+          <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/SplashActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="48" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.40936556">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#447#888#0" expanded="true" />
-            <element signature="e#887#888#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.692308">
-          <caret line="26" column="71" selection-start-line="26" selection-start-column="71" selection-end-line="26" selection-end-column="71" />
-          <folding>
-            <element signature="e#521#539#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mentatmobile/randomquotes/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30664653">
-          <caret line="85" column="40" selection-start-line="85" selection-start-column="40" selection-end-line="85" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#502#943#0" expanded="true" />
+            <element signature="e#942#943#0" expanded="true" />
           </folding>
         </state>
       </provider>
