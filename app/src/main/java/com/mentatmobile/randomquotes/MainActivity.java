@@ -81,10 +81,9 @@ public class MainActivity extends Activity {
 
     private void clearStorage(){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String maxBackgrounds = preferences.getString("maxBackgrounds", "-1");
-        Integer intMaxBackgrounds = Integer.parseInt(maxBackgrounds);
+        Integer maxBackgrounds = preferences.getInt("maxBackgrounds", 10);
 
-        for(int imageId = intMaxBackgrounds; imageId < 50; imageId++){
+        for(int imageId = maxBackgrounds; imageId < 50; imageId++){
             deleteFile(String.format("image%03d.png", imageId));
         }
     }
