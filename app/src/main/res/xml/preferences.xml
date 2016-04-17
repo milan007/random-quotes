@@ -11,4 +11,13 @@
         android:defaultValue="@array/genreArray"
         android:entries="@array/genreArray"
         android:entryValues="@array/genreArray"/>
+
+    <com.mentatmobile.randomquotes.ResetDefaultsPreference
+        android:dialogMessage="@string/reset_dialog_message"
+        android:key="resetDialog"
+        android:negativeButtonText="@string/reset_neg_button_text"
+        android:persistent="false"
+        android:positiveButtonText="@string/reset_pos_button_message"
+        android:summary="@string/reset_summary"
+        android:title="@string/reset_title" />
 </PreferenceScreen>

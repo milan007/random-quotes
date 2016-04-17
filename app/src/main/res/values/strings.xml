@@ -7,4 +7,9 @@
     <string name="max_backgrounds_summary">Maximum number of backgrounds to cycle through</string>
     <string name="genres">Genres</string>
     <string name="genres_summary">Choose the genres you\'d like to read</string>
+    <string name="reset_summary">Reset all settings to their initial values</string>
+    <string name="reset_dialog_message">Revert all values to their defaults?</string>
+    <string name="reset_neg_button_text">No, KEEP current values</string>
+    <string name="reset_pos_button_message">Yes, RESET all values</string>
+    <string name="reset_title">Reset to default</string>
 </resources>
