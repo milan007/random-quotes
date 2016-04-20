@@ -3,7 +3,7 @@ package com.mentatmobile.randomquotes;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
 
 public class SplashActivity extends Activity {
@@ -13,25 +13,19 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-
         setImmersiveMode();
 
-        Thread timerThread = new Thread() {
+        /* New Handler to start the Menu-Activity
+         * and close this Splash-Screen after some seconds.*/
+        new Handler().postDelayed(new Runnable(){
+            @Override
             public void run() {
-                try {
-                    sleep(3000);
-                }
-                catch (InterruptedException e) {
-                    Log.e(LOG_TAG, e.getMessage(), e);
-                }
-                finally {
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
+                /* Create an Intent that will start the Menu-Activity. */
+                Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                SplashActivity.this.startActivity(mainIntent);
+                SplashActivity.this.finish();
             }
-        };
-
-        timerThread.start();
+        }, 5000);
     }
 
     private void setImmersiveMode(){
