@@ -1,4 +1,4 @@
-package com.mentatmobile.randomquotes.data;
+package ca.mobilementat.randomquotes.data;
 
 public class Quote {
 

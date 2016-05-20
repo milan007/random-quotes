@@ -1,4 +1,4 @@
-package com.mentatmobile.randomquotes;
+package ca.mobilementat.randomquotes;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,10 +20,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mentatmobile.randomquotes.data.DatabaseHandler;
-import com.mentatmobile.randomquotes.data.Quote;
-
 import java.io.InputStream;
+
+import ca.mobilementat.randomquotes.data.DatabaseHandler;
+import ca.mobilementat.randomquotes.data.Quote;
 
 public class MainActivity extends Activity {
 

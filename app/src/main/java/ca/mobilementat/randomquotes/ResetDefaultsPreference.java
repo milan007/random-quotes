@@ -1,4 +1,4 @@
-package com.mentatmobile.randomquotes;
+package ca.mobilementat.randomquotes;
 
 import android.content.Context;
 import android.content.DialogInterface;

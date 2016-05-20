@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.mentatmobile.randomquotes.NumberPickerPreference
+    <ca.mobilementat.randomquotes.NumberPickerPreference
         android:key="maxBackgrounds"
         android:defaultValue="10"
         android:title="@string/max_backgrounds"
@@ -11,7 +11,7 @@
         android:defaultValue="@array/genreArray"
         android:entries="@array/genreArray"
         android:entryValues="@array/genreArray"/>
-    <com.mentatmobile.randomquotes.ResetDefaultsPreference
+    <ca.mobilementat.randomquotes.ResetDefaultsPreference
         android:dialogMessage="@string/reset_dialog_message"
         android:key="resetDialog"
         android:negativeButtonText="@string/reset_neg_button_text"

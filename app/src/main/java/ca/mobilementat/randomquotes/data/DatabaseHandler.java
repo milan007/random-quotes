@@ -1,4 +1,4 @@
-package com.mentatmobile.randomquotes.data;
+package ca.mobilementat.randomquotes.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,7 +24,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String LOG_TAG = "RandomQuotesTag";
 
     //The Android's default system path of your application database.
-    private static String DB_PATH = "/data/data/com.mentatmobile.randomquotes/databases/";
+    private static String DB_PATH = "/data/data/ca.mobilementat.randomquotes/databases/";
     private static String DB_NAME = "randomQuotes.db";
 
     private SQLiteDatabase myDataBase;
